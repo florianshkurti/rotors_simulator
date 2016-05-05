@@ -51,7 +51,8 @@
            <arg name="x" value="0.0"/>
            <arg name="y" value="2.0"/>
            <arg name="z" value="0.0"/>
-           <arg name="robot_name" value="$(arg husky_name)_1"/>           
+           <arg name="robot_name" value="$(arg husky_name)_1"/>
+           <arg name="tf_prefix" value="$(arg husky_name)_1"/>
      </include>
 
      <include file="$(find husky_control)/launch/teleop.launch">
@@ -61,7 +62,7 @@
   </group>
   
   
-  <!--group ns="$(arg husky_name)_2">
+  <group ns="$(arg husky_name)_2">
       <include file="$(find husky_gazebo)/launch/spawn_husky.launch">
            <arg name="laser_enabled" value="$(arg laser_enabled)"/>
            <arg name="ur5_enabled" value="$(arg ur5_enabled)"/>
@@ -69,14 +70,15 @@
            <arg name="x" value="0.0"/>
            <arg name="y" value="-1.0"/>
            <arg name="z" value="0.1"/>
-           <arg name="robot_name" value="$(arg husky_name)_2"/>           
+           <arg name="robot_name" value="$(arg husky_name)_2"/>
+           <arg name="tf_prefix" value="$(arg husky_name)_2"/>           
      </include>
 
      <include file="$(find husky_control)/launch/teleop.launch">
            <arg name="joy_dev" value="/dev/input/js1"/>
            <arg name="joystick" value="true"/>   
      </include>
-  </group-->
+  </group>
   
 
 </launch>
