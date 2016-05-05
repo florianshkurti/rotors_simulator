@@ -4,7 +4,11 @@
   <arg name="enable_logging" default="false" />
   <arg name="enable_ground_truth" default="true" />
   <arg name="log_file" default="$(arg mav_name)" />
-
+  <arg name="laser_enabled" default="true"/>
+  <arg name="ur5_enabled" default="false"/>
+  <arg name="kinect_enabled" default="true"/>
+  <arg name="husky_name" default="husky"/>
+  
   <env name="GAZEBO_MODEL_PATH" value="$(find rotors_gazebo)/models"/>
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="world_name" value="$(find rotors_gazebo)/worlds/$(arg world_name).world"/>
@@ -23,6 +27,9 @@
       <arg name="enable_logging" value="$(arg enable_logging)" />
       <arg name="enable_ground_truth" value="$(arg enable_ground_truth)" />
       <arg name="log_file" value="$(arg log_file)"/>
+      <arg name="x" value="0.0"/>
+      <arg name="y" value="0.0"/>
+      <arg name="z" value="0.1"/>
     </include>
     
     <node name="lee_position_controller_node" pkg="rotors_control" type="lee_position_controller_node" output="screen">
@@ -35,4 +42,41 @@
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
   </group>
+
+  <group ns="$(arg husky_name)_1">
+      <include file="$(find husky_gazebo)/launch/spawn_husky.launch">
+           <arg name="laser_enabled" value="$(arg laser_enabled)"/>
+           <arg name="ur5_enabled" value="$(arg ur5_enabled)"/>
+           <arg name="kinect_enabled" value="$(arg kinect_enabled)"/>
+           <arg name="x" value="0.0"/>
+           <arg name="y" value="2.0"/>
+           <arg name="z" value="0.0"/>
+           <arg name="robot_name" value="$(arg husky_name)_1"/>           
+     </include>
+
+     <include file="$(find husky_control)/launch/teleop.launch">
+           <arg name="joy_dev" value="/dev/input/js0"/>
+           <arg name="joystick" value="true"/>   
+     </include>
+  </group>
+  
+  
+  <!--group ns="$(arg husky_name)_2">
+      <include file="$(find husky_gazebo)/launch/spawn_husky.launch">
+           <arg name="laser_enabled" value="$(arg laser_enabled)"/>
+           <arg name="ur5_enabled" value="$(arg ur5_enabled)"/>
+           <arg name="kinect_enabled" value="$(arg kinect_enabled)"/>
+           <arg name="x" value="0.0"/>
+           <arg name="y" value="-1.0"/>
+           <arg name="z" value="0.1"/>
+           <arg name="robot_name" value="$(arg husky_name)_2"/>           
+     </include>
+
+     <include file="$(find husky_control)/launch/teleop.launch">
+           <arg name="joy_dev" value="/dev/input/js1"/>
+           <arg name="joystick" value="true"/>   
+     </include>
+  </group-->
+  
+
 </launch>
