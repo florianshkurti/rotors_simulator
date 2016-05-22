@@ -1,0 +1,19 @@
+<launch>
+  <arg name="map_file"  default="name.bt"/>
+  <arg name="rviz_conf" default="$(find rotors_gazebo)/resource/octomap_to_occupancy_grid_conversion.rviz"/>  
+
+  <node name="octomap_server_node" pkg="octomap_server" type="octomap_server_node" args="$(arg map_file)" output="screen">
+       <param name="resolution"                    value="0.1" />
+       <param name="filter_ground"                 value="false" />
+       <param name="ground_filter/distance"        value="0.1"  />
+       <param name="ground_filter/angle"           value="0.15" />
+       <param name="ground_filter/plane_distance"  value="0.07" />
+       <param name="pointcloud_min_z"              value="0.1"  />
+       <param name="pointcloud_max_z"              value="100"  />
+       <param name="occupancy_min_z"               value="0.1"  />
+       <param name="occupancy_max_z"               value="0.3"  />
+  </node>
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rviz_conf)" output="screen" launch-prefix=""/>
+
+</launch>
